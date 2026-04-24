@@ -42,7 +42,7 @@ export default function AddMediaForm({ projectId }: AddMediaFormProps) {
         }
 
         toast.success(response.data.message);
-        navigate("/projects" + projectId + "/edit");
+        navigate("/projects/" + projectId + "/edit");
     }
 
     return (
