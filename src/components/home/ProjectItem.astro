@@ -23,7 +23,7 @@ const featureImage = media.find((m) => m.featured)?.url || "";
 
 <article
     class={`card-glass overflow-hidden flex flex-col reveal rd${i + 1}
-                    transition-all duration-300 cursor-pointer
+                    transition-all duration-300
                     hover:-translate-y-1 hover:shadow-[0_12px_48px_rgba(0,0,0,.5)]`}
 >
     <div>
@@ -52,9 +52,11 @@ const featureImage = media.find((m) => m.featured)?.url || "";
                 })
             }
         </div>
-        <h3 class="font-heading text-[1.05rem] font-bold text-fore mb-2">
-            {name}
-        </h3>
+        <a href={`/projects/${slug}`}>
+            <h3 class="font-heading text-[1.05rem] font-bold text-fore mb-2 hover:text-white hover:underline cursor-pointer">
+                {name}
+            </h3>
+        </a>
         <p class="text-[0.825rem] text-dim leading-relaxed flex-1 mb-5">
             {description}
         </p>
