@@ -57,5 +57,11 @@
   },
   "devDependencies": {
     "@types/nodemailer": "^8.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "html-encoding-sniffer": "3.0.0",
+      "jsdom": "24.0.0"
+    }
   }
 }
