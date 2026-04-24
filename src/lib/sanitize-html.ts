@@ -1,16 +1,4 @@
-import { JSDOM } from "jsdom";
-import * as DOMPurifyModule from "dompurify";
-
-type DOMPurifyFactory = (window: unknown) => {
-    sanitize: (value: string, config?: Record<string, unknown>) => string;
-    addHook: (name: string, hook: (node: Node) => void) => void;
-};
-
-const createDOMPurify = ((DOMPurifyModule as unknown as { default?: DOMPurifyFactory }).default ??
-    (DOMPurifyModule as unknown as DOMPurifyFactory)) as DOMPurifyFactory;
-
-const { window } = new JSDOM("", { url: "https://example.com" });
-const DOMPurify = createDOMPurify(window as unknown as any);
+import DOMPurify from "isomorphic-dompurify";
 
 const ALLOWED_IFRAME_HOSTS = new Set([
     "youtube.com",
