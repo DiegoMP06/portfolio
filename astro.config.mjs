@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import { loadEnv } from 'vite';
+import { sharpImageService } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite'
 import db from '@astrojs/db';
@@ -16,6 +17,7 @@ export default defineConfig({
   site: SITE_URL || 'http://localhost:4321',
 
   image: {
+    service: sharpImageService(),
     domains: [CLOUDINARY_DOMAIN || 'res.cloudinary.com'],
   },
 
