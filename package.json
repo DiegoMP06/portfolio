@@ -43,25 +43,20 @@
     "astro": "^6.1.9",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
-    "isomorphic-dompurify": "^3.10.0",
     "lucide-react": "^1.9.0",
     "nodemailer": "^8.0.5",
     "photoswipe": "^5.4.4",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-hook-form": "^7.73.1",
+    "sanitize-html": "^2.17.3",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.4",
     "vite": "^7.3.2"
   },
   "devDependencies": {
-    "@types/nodemailer": "^8.0.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "html-encoding-sniffer": "3.0.0",
-      "jsdom": "24.0.0"
-    }
+    "@types/nodemailer": "^8.0.0",
+    "@types/sanitize-html": "^2.16.1"
   }
 }
