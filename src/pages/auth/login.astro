@@ -1,0 +1,24 @@
+---
+import AuthLayout from "../../layouts/AuthLayout.astro";
+import LoginForm from "../../components/auth/LoginForm";
+import { getCurrentUserFromCookies } from "../../lib/auth";
+
+const currentUser = await getCurrentUserFromCookies(Astro.cookies);
+
+if (currentUser) {
+    return Astro.redirect("/settings");
+}
+---
+
+<AuthLayout
+    title="Iniciar sesión"
+    description="Inicia sesión en tu cuenta para acceder a tus proyectos y notas de aprendizaje."
+>
+    <LoginForm client:load />
+    
+    <p class="mt-10 text-center">
+        <a href="/auth/forgot-password" class="text-dim hover:underline hover:text-fore transition-colors">
+            Olvidé mi contraseña
+        </a>
+    </p>
+</AuthLayout>

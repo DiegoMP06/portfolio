@@ -1,0 +1,172 @@
+---
+import type { NavLink as NavLinkType } from "../../types";
+import MenuIcon from "../icons/MenuIcon.astro";
+import PrimaryButton from "./PrimaryButton.astro";
+import NavLink from "./NavLink.astro";
+import AppIcon from "./AppIcon.astro";
+
+const navLinks: NavLinkType[] = [
+    { href: "#about", label: "Sobre mí" },
+    { href: "#skills", label: "Habilidades" },
+    { href: "#learning", label: "Logros" },
+    { href: "#projects", label: "Proyectos" },
+    { href: "#services", label: "Servicios" },
+    { href: "#contact", label: "Contacto" },
+];
+
+const privateLinks: NavLinkType[] = [
+    { href: "/projects", label: "Proyectos" },
+    { href: "/settings", label: "Configuración" },
+];
+
+const isAuthenticated = Boolean(Astro.locals.currentUser);
+const isHome = Astro.url.pathname === "/";
+const shouldShowMobileMenu = isHome || isAuthenticated;
+---
+
+<div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2.5">
+        <AppIcon className="size-8 block" />
+        <span
+            id="logo-text"
+            class="hidden sm:block font-heading font-semibold text-[0.8rem] tracking-[0.2em] uppercase text-neon"
+        >
+            Meneses<span class="text-pink">Tech</span>
+        </span>
+    </a>
+
+    {
+        isHome && !isAuthenticated && (
+            <>
+                <nav
+                    class="hidden lg:flex items-center gap-7"
+                    aria-label="Navegación principal"
+                >
+                    {navLinks.map((link) => (
+                        <NavLink link={link} />
+                    ))}
+                </nav>
+
+                <PrimaryButton
+                    as="a"
+                    href="#contact"
+                    class="hidden lg:inline-flex text-[0.8rem] py-2 px-4"
+                >
+                    Contactar
+                </PrimaryButton>
+            </>
+        )
+    }
+
+    {
+        isAuthenticated && (
+            <>
+                <nav class="hidden lg:flex items-center gap-8">
+                    <NavLink link={{ href: "/projects", label: "Proyectos" }} />
+                    <NavLink
+                        link={{ href: "/settings", label: "Configuración" }}
+                    />
+                </nav>
+
+                <PrimaryButton class="text-sm hidden lg:flex logout-btn">
+                    Cerrar sesión
+                </PrimaryButton>
+            </>
+        )
+    }
+
+    {
+        shouldShowMobileMenu && (
+            <button
+                class="lg:hidden text-dim hover:text-fore transition-colors cursor-pointer"
+                aria-label="Abrir menú"
+                aria-expanded="false"
+                id="hamburger-btn"
+            >
+                <MenuIcon />
+            </button>
+        )
+    }
+</div>
+
+<div
+    id="mobile-menu"
+    role="navigation"
+    aria-label="Menú móvil"
+    class="hidden flex-col gap-4 px-6 pb-6 pt-0 border-t border-stroke"
+    style="background: rgba(13,13,26,0.97);"
+>
+    <nav
+        class="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-4 bg-surface/95 backdrop-blur-xl"
+    >
+        {
+            isHome &&
+                navLinks.map((link) => <NavLink link={link} variant="mobile" />)
+        }
+        {
+            isAuthenticated && (
+                <>
+                    <hr class="border-stroke my-1" />
+                    {privateLinks.map((link) => (
+                        <NavLink link={link} variant="mobile" />
+                    ))}
+
+                    <PrimaryButton class="self-start text-[0.8rem] logout-btn">
+                        Cerrar sesión
+                    </PrimaryButton>
+                </>
+            )
+        }
+    </nav>
+</div>
+
+<script>
+    import { actions } from "astro:actions";
+    import { navigate } from "astro:transitions/client";
+
+    const logoutBtn = document.querySelectorAll(
+        ".logout-btn",
+    ) as NodeListOf<HTMLButtonElement>;
+
+    const btn = document.getElementById("hamburger-btn")!;
+    const menu = document.getElementById("mobile-menu")!;
+
+    btn.addEventListener("click", () => {
+        const open = menu.classList.toggle("open");
+        menu.style.display = open ? "flex" : "none";
+        btn.setAttribute("aria-expanded", String(open));
+    });
+    menu.querySelectorAll("a").forEach((a) =>
+        a.addEventListener("click", () => {
+            menu.classList.remove("open");
+            menu.style.display = "none";
+        }),
+    );
+
+    const sections = document.querySelectorAll<HTMLElement>("section[id]");
+    const navLinks =
+        document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]");
+
+    window.addEventListener(
+        "scroll",
+        () => {
+            let current = "";
+            sections.forEach((s) => {
+                if (window.scrollY >= s.offsetTop - 140) current = s.id;
+            });
+            navLinks.forEach((l) => {
+                const active = l.getAttribute("href") === "#" + current;
+                l.style.color = active ? "var(--color-fore)" : "";
+            });
+        },
+        { passive: true },
+    );
+
+    logoutBtn.forEach((btn) => {
+        btn.addEventListener("click", async () => {
+            await actions.auth.logout({});
+            navigate("/auth/login");
+        });
+    });
+</script>
+

@@ -1,0 +1,352 @@
+---
+// src/components/Contact.astro
+---
+
+<section id="contact" class="py-24 relative overflow-hidden">
+    <!-- Subtle overlay -->
+    <div
+        class="absolute inset-0 pointer-events-none"
+        style="background:linear-gradient(to bottom,transparent,rgba(139,92,246,.03),transparent);"
+    >
+    </div>
+    <div
+        class="bg-blob w-md h-64 bottom-0 left-1/2 -translate-x-1/2"
+        style="background:rgba(0,212,255,.05);"
+    >
+    </div>
+
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-16 reveal">
+            <p
+                class="font-mono text-[0.7rem] tracking-[0.25em] uppercase text-purple mb-3"
+            >
+                // contacto
+            </p>
+            <h2
+                class="font-display font-bold text-[clamp(1.5rem,3vw,2.25rem)] tracking-[0.05em] mb-3"
+            >
+                Hablemos de <span class="gradient-text-pb">algo grande</span>
+            </h2>
+            <div class="section-line-pb mx-auto mb-4"></div>
+            <p class="text-dim max-w-md mx-auto text-[0.9rem]">
+                ¿Tienes un proyecto de IA? ¿Necesitas una aplicación web? Mi
+                bandeja está abierta.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 items-start max-md:grid-cols-1">
+            <div class="card-glass p-8 reveal rd1">
+                <form id="contact-form" class="flex flex-col gap-4" novalidate>
+                    <div class="flex flex-col gap-2">
+                        <label
+                            for="name"
+                            class="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-fore"
+                        >
+                            Nombre
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            required
+                            placeholder="Tu nombre"
+                            class="w-full px-4 py-2.5 rounded-lg bg-card border border-stroke text-fore font-body text-[0.875rem] placeholder-dim/50 outline-none transition-all duration-200 focus:border-purple/55 focus:shadow-[0_0_0_2px_rgba(139,92,246,.12)]"
+                        />
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label
+                            for="email"
+                            class="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-fore"
+                        >
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            placeholder="tu@email.com"
+                            class="w-full px-4 py-2.5 rounded-lg bg-card border border-stroke text-fore font-body text-[0.875rem] placeholder-dim/50 outline-none transition-all duration-200 focus:border-purple/55 focus:shadow-[0_0_0_2px_rgba(139,92,246,.12)]"
+                        />
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label
+                            for="subject"
+                            class="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-fore"
+                        >
+                            Asunto
+                        </label>
+                        <input
+                            type="text"
+                            id="subject"
+                            name="subject"
+                            placeholder="¿De qué quieres hablar?"
+                            class="w-full px-4 py-2.5 rounded-lg bg-card border border-stroke text-fore font-body text-[0.875rem] placeholder-dim/50 outline-none transition-all duration-200 focus:border-purple/55 focus:shadow-[0_0_0_2px_rgba(139,92,246,.12)]"
+                        />
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label
+                            for="message"
+                            class="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-fore"
+                        >
+                            Mensaje
+                        </label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="5"
+                            required
+                            placeholder="Cuéntame sobre tu proyecto..."
+                            class="w-full px-4 py-2.5 rounded-lg bg-card border border-stroke text-fore font-body text-[0.875rem] placeholder-dim/50 outline-none resize-y min-h-28 transition-all duration-200 focus:border-purple/55 focus:shadow-[0_0_0_2px_rgba(139,92,246,.12)]"
+                        ></textarea>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn-primary w-full justify-center"
+                    >
+                        <span
+                            class="flex items-center justify-center gap-2"
+                            id="send-message-btn"
+                        >
+                            <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                            >
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"
+                                ></polygon>
+                            </svg>
+                            Enviar mensaje
+                        </span>
+                    </button>
+
+                    <div
+                        id="form-success"
+                        class="hidden text-center px-4 py-3 rounded-lg font-mono text-[0.8rem] text-green-400"
+                        style="background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);"
+                    >
+                        ✓ Mensaje enviado. ¡Te respondo pronto!
+                    </div>
+
+                    <div
+                        id="form-error"
+                        class="hidden text-center px-4 py-3 rounded-lg font-mono text-[0.8rem] text-red-400"
+                        style="background:rgba(222, 74, 74, 0.08);border:1px solid rgba(222, 74, 74, 0.25);"
+                    >
+                        ✗ Ha ocurrido un error. Por favor, intenta de nuevo.
+                    </div>
+                </form>
+            </div>
+
+            <div class="flex flex-col gap-5 reveal rd2">
+                <div class="card-glass p-6">
+                    <p
+                        class="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-dim mb-4"
+                    >
+                        // contacto directo
+                    </p>
+                    <div class="flex flex-col gap-3.5">
+                        <a
+                            href={`mailto:${import.meta.env.DEV_MAIL}`}
+                            class="flex items-center gap-3 text-dim text-[0.85rem] transition-colors duration-200 hover:text-red"
+                        >
+                            <div
+                                class="w-8 h-8 rounded-lg border border-stroke flex items-center justify-center shrink-0 transition-colors duration-200 hover:border-red/40"
+                            >
+                                <svg
+                                    width="13"
+                                    height="13"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <path
+                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                                    ></path>
+                                    <polyline points="22,6 12,13 2,6"
+                                    ></polyline>
+                                </svg>
+                            </div>
+                            {import.meta.env.DEV_MAIL}
+                        </a>
+                        <div
+                            class="flex items-center gap-3 text-dim text-[0.85rem] cursor-default"
+                        >
+                            <div
+                                class="w-8 h-8 rounded-lg border border-stroke flex items-center justify-center shrink-0"
+                            >
+                                <svg
+                                    width="13"
+                                    height="13"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <path
+                                        d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                                    ></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            Panotla, Tlaxcala, México
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-glass p-6">
+                    <p
+                        class="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-dim mb-4"
+                    >
+                        // redes sociales
+                    </p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <a
+                            href={import.meta.env.GITHUB_URL}
+                            target="_blank"
+                            rel="noopener"
+                            class="flex items-center gap-2.5 px-3 py-3 rounded-[0.625rem] border border-stroke text-dim font-heading text-[0.8rem] font-semibold transition-all duration-200 hover:text-fore hover:border-white/30"
+                        >
+                            <svg
+                                width="15"
+                                height="15"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                            >
+                                <path
+                                    d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.09.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"
+                                ></path>
+                            </svg>
+                            GitHub
+                        </a>
+                        <a
+                            href={import.meta.env.LINKEDIN_URL}
+                            target="_blank"
+                            rel="noopener"
+                            class="flex items-center gap-2.5 px-3 py-3 rounded-[0.625rem] border border-stroke text-dim font-heading text-[0.8rem] font-semibold transition-all duration-200 hover:border-[#0077b5]/50 hover:text-[#0a66c2]"
+                        >
+                            <svg
+                                width="15"
+                                height="15"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                            >
+                                <path
+                                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                                ></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                            LinkedIn
+                        </a>
+                        <a
+                            href={import.meta.env.X_URL}
+                            target="_blank"
+                            rel="noopener"
+                            class="flex items-center gap-2.5 px-3 py-3 rounded-[0.625rem] border border-stroke text-dim font-heading text-[0.8rem] font-semibold transition-all duration-200 hover:border-[#1da1f2]/40 hover:text-[#1da1f2]"
+                        >
+                            <svg
+                                width="15"
+                                height="15"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                            >
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                                ></path>
+                            </svg>
+                            Twitter / X
+                        </a>
+                        <a
+                            href={`mailto:${import.meta.env.DEV_MAIL}`}
+                            class="flex items-center gap-2.5 px-3 py-3 rounded-[0.625rem] border border-stroke text-dim font-heading text-[0.8rem] font-semibold transition-all duration-200 hover:border-red/40 hover:text-red"
+                        >
+                            <svg
+                                width="15"
+                                height="15"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                            >
+                                <path
+                                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                                ></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            Email
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-glass flex items-center gap-3 px-5 py-4">
+                    <span
+                        class="w-2.5 h-2.5 rounded-full bg-green-400 shrink-0 animate-pulse-dot"
+                        style="box-shadow:0 0 8px rgba(74,222,128,.5);"></span>
+                    <div>
+                        <div
+                            class="font-heading text-[0.875rem] font-semibold text-fore"
+                        >
+                            Disponible para colaborar
+                        </div>
+                        <div class="font-mono text-[0.65rem] text-dim">
+                            Freelance · Empleo · Colaboraciones
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    import { actions } from "astro:actions";
+
+    const form = document.getElementById("contact-form") as HTMLFormElement;
+    const success = document.getElementById("form-success");
+    const errorDiv = document.getElementById("form-error");
+    const submitBtn = document.getElementById(
+        "send-message-btn",
+    ) as HTMLButtonElement;
+
+    form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        if (!submitBtn) return;
+        submitBtn.disabled = true;
+        success?.classList.add("hidden");
+
+        try {
+            const formData = new FormData(form);
+            const response = await actions.contact.send({
+                name: formData.get("name") as string,
+                email: formData.get("email") as string,
+                subject: formData.get("subject") as string,
+                message: formData.get("message") as string,
+            });
+
+            if (response.error || !response.data?.success) {
+                errorDiv?.classList.remove("hidden");
+                return;
+            }
+
+            if (response.data.success) {
+                success?.classList.remove("hidden");
+                form.reset();
+            }
+        } catch (error) {
+            errorDiv?.classList.remove("hidden");
+        } finally {
+            submitBtn.disabled = false;
+            setTimeout(() => success?.classList.add("hidden"), 5000);
+        }
+    });
+</script>

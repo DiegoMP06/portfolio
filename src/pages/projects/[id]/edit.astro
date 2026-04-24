@@ -1,0 +1,77 @@
+---
+import { Category, db, Status } from "astro:db";
+import CloudinaryImage from "../../../components/cloudinary/CloudinaryImage.astro";
+import EditProjectForm from "../../../components/projects/EditProjectForm";
+import MediaOptions from "../../../components/projects/MediaOptions";
+import DashboardLayout from "../../../layouts/DashboardLayout.astro";
+import { getProjectById } from "../../../services/ProjectService";
+import AddMediaForm from "../../../components/projects/AddMediaForm";
+
+const projectId = Number(Astro.params.id);
+
+if (!Number.isInteger(projectId) || projectId <= 0) {
+    return Astro.redirect("/projects");
+}
+
+const project = await getProjectById(projectId);
+
+if (!project) {
+    return Astro.redirect("/projects");
+}
+
+const categories = await db.select().from(Category).all();
+const statuses = await db.select().from(Status).all();
+---
+
+<DashboardLayout
+    title="Editar proyecto"
+    description="Edita tu proyecto por si lo necesitas. Puedes editar la información, categorías y el estado."
+    navLink={{
+        label: "Regresar",
+        href: "/projects",
+    }}
+>
+    <script
+        slot="head"
+        is:inline
+        src="https://upload-widget.cloudinary.com/global/all.js"></script>
+
+    <div class="max-w-2xl mx-auto w-full">
+        <EditProjectForm
+            categories={categories}
+            statuses={statuses}
+            project={project}
+            client:load
+        />
+    </div>
+
+    <div class="mt-10">
+        <h2 class="text-2xl font-heading text-fore mb-4">Imágenes:</h2>
+
+        <AddMediaForm projectId={project.id} client:load />
+
+        <div class="grid md:grid-cols-2 gap-4 lg:grid-cols-3">
+            {
+                project.media.map((m) => (
+                    <div class="card-glass p-2 flex flex-col gap-2">
+                        <CloudinaryImage
+                            publicId={m.url}
+                            alt={`Imagen de ${project.name}`}
+                            width={640}
+                            height={360}
+                        />
+
+                        <div class="flex items-center justify-between gap-2">
+                            <MediaOptions
+                                mediaId={m.id}
+                                projectId={project.id}
+                                featured={m.featured}
+                                client:load
+                            />
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</DashboardLayout>

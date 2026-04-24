@@ -1,0 +1,41 @@
+---
+import EditUserForm from "../components/auth/EditUserForm";
+import NewPasswordForm from "../components/auth/NewPasswordForm";
+import DashboardLayout from "../layouts/DashboardLayout.astro";
+
+const currentUser = Astro.locals.currentUser;
+
+if (!currentUser) {
+    return Astro.redirect("/auth/login");
+}
+---
+
+<DashboardLayout
+    title="Configuración"
+    description="Administra tu cuenta, correo y contraseña en un solo lugar."
+>
+    <div class="card-glass p-6 max-w-2xl mx-auto w-full">
+        <h2 class="text-2xl font-heading text-white">Editar perfil</h2>
+
+        <p class="text-dim mb-6">
+            Actualiza tu correo y nombre de usuario para mantener tu identidad
+            segura.
+        </p>
+
+        <EditUserForm
+            client:load
+            name={currentUser.name}
+            email={currentUser.email}
+        />
+    </div>
+
+    <div class="card-glass p-6 max-w-2xl mx-auto w-full mt-10">
+        <h2 class="text-2xl font-heading text-white">Cambiar contraseña</h2>
+
+        <p class="text-dim mb-6">
+            Cambia tu contraseña para reforzar la seguridad de tu cuenta.
+        </p>
+
+        <NewPasswordForm client:load />
+    </div>
+</DashboardLayout>

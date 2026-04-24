@@ -1,0 +1,26 @@
+---
+import { cn } from "../../lib/utils";
+
+const { as = "button", class: className = '', ...props } = Astro.props;
+
+const classes = cn(
+    "btn-primary",
+    className,
+);
+---
+
+{
+    as === "button" ? (
+        <button class={classes} {...props}>
+            <span>
+                <slot />
+            </span>
+        </button>
+    ) : (
+        <a class={classes} {...props}>
+            <span>
+                <slot />
+            </span>
+        </a>
+    )
+}

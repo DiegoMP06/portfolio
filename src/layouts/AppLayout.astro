@@ -1,0 +1,29 @@
+﻿---
+import Footer from "../components/ui/Footer.astro";
+import Navbar from "../components/ui/Navbar.astro";
+import type { LayoutProps } from "../types";
+import Layout from "./Layout.astro";
+
+type Props = LayoutProps;
+
+const { ...props } = Astro.props;
+---
+
+<Layout {...props}>
+    <div class="min-h-screen flex flex-col">
+        <header
+            class="sticky bg-base/90 backdrop-blur-xl border-b border-stroke top-0 left-0 right-0 z-50 transition-all duration-300"
+        >
+            <Navbar />
+        </header>
+
+        <main class="py-10 px-4 flex-1">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 gap-8">
+                <slot />
+            </div>
+        </main>
+
+        <Footer />
+    </div>
+</Layout>
+

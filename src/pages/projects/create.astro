@@ -1,0 +1,30 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+import CreateProjectForm from "../../components/projects/CreateProjectForm";
+import { db, Category, Status } from "astro:db";
+
+const categories = await db.select().from(Category).all();
+const statuses = await db.select().from(Status).all();
+---
+
+<DashboardLayout
+    title="Crear proyecto"
+    description="Crea un nuevo proyecto para mostrarlo en tu portafolio. Podrás editarlo cuando quieras."
+    navLink={{
+        label: "Regresar",
+        href: "/projects",
+    }}
+>
+    <script
+        slot="head"
+        is:inline
+        src="https://upload-widget.cloudinary.com/global/all.js"></script>
+
+    <div class="max-w-2xl mx-auto w-full">
+        <CreateProjectForm
+            categories={categories}
+            statuses={statuses}
+            client:load
+        />
+    </div>
+</DashboardLayout>

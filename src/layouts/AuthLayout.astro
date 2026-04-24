@@ -1,0 +1,33 @@
+---
+import AppIcon from "../components/ui/AppIcon.astro";
+import type { LayoutProps } from "../types";
+import Layout from "./Layout.astro";
+
+type Props = LayoutProps;
+
+const { robots = "noindex,nofollow", ...rest } = Astro.props;
+const props = { robots, ...rest };
+const { title, description } = props;
+---
+
+<Layout {...props}>
+    <div
+        class="min-h-screen flex flex-col items-center justify-center py-10 px-4"
+    >
+        <div class="max-w-xl mx-auto w-full">
+            <a href="/" class="flex items-center justify-center mb-10">
+                <AppIcon className="size-24" />
+            </a>
+
+            <h1 class="text-4xl font-bold text-white text-center">
+                {title}
+            </h1>
+
+            <p class="mt-2 text-center text-lg text-slate-200 mb-10">
+                {description}
+            </p>
+
+            <slot />
+        </div>
+    </div>
+</Layout>

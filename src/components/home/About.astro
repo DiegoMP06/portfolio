@@ -1,0 +1,160 @@
+---
+import { timeline } from "../../data/portfolio";
+
+const stats = [
+    { num: "3+", label: "Años en Dev Web" },
+    { num: "∞", label: "Curvas de aprendizaje" },
+    { num: "AI", label: "Especialidad" },
+    {
+        num: "UPTlax",
+        label: "Universidad",
+        small: true,
+    },
+];
+---
+
+<section id="about" class="py-24 relative overflow-hidden">
+    <div
+        class="bg-blob w-96 h-96 top-0 right-0"
+        style="background:rgba(0,212,255,.05);"
+    >
+    </div>
+
+    <div class="max-w-6xl mx-auto px-6">
+        <div
+            class="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-12"
+        >
+            <div class="reveal-left">
+                <p
+                    class="font-mono text-[0.7rem] tracking-[0.25em] uppercase text-red mb-3"
+                >
+                    // sobre mí
+                </p>
+                <h2
+                    class="font-display font-bold text-[clamp(1.5rem,3vw,2.25rem)] tracking-[0.05em] mb-3"
+                >
+                    Construyendo con <span class="gradient-text-rp"
+                        >propósito</span
+                    >
+                </h2>
+                <div class="section-line mb-6"></div>
+
+                <div class="flex flex-col gap-4">
+                    <p class="text-[0.95rem] text-dim leading-[1.75]">
+                        Desarrollador Full Stack y estudiante de
+                        <strong class="text-neon font-medium"
+                            >Tecnologías de la Información e Innovación Digital</strong
+                        >
+                        en la Universidad Politécnica de Tlaxcala, con especialidad
+                        en
+                        <em class="text-purple italic"
+                            >Inteligencia Artificial</em
+                        >.
+                    </p>
+                    <p class="text-[0.95rem] text-dim leading-[1.75]">
+                        Desde mediados de 2025 me sumergí de lleno en el mundo
+                        de la IA: regresiones, redes neuronales, CNNs para
+                        procesamiento de imágenes. Cada modelo entrenado es una
+                        lección que no se olvida.
+                    </p>
+                    <p class="text-[0.95rem] text-dim leading-[1.75]">
+                        Hoy combino ambos mundos: integro inteligencia
+                        artificial directamente en las aplicaciones que
+                        construyo, porque creo que esa intersección es donde
+                        está el trabajo más interesante.
+                    </p>
+                    <p
+                        class="text-[0.95rem] text-purple italic border-l-2 border-purple/40 pl-3 mt-1"
+                    >
+                        "Si hoy sé más que ayer, voy bien."
+                    </p>
+                </div>
+
+                <div
+                    class="inline-flex items-center gap-3 px-5 py-3 rounded-xl border border-stroke bg-card mt-6"
+                >
+                    <div
+                        class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                        style="background:linear-gradient(135deg,rgba(255,45,85,.3),rgba(139,92,246,.3));
+                      border:1px solid rgba(139,92,246,.5);"
+                    >
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p
+                            class="font-mono text-[0.6rem] tracking-[0.12em] uppercase text-dim"
+                        >
+                            Estudiante activo
+                        </p>
+                        <p
+                            class="font-heading text-[0.875rem] font-medium text-fore"
+                        >
+                            UPTlax · TIID · IA
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal">
+                <!-- Stats grid -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    {
+                        stats.map(({ num, label, small }, i) => (
+                            <div
+                                class={`reveal rd${i + 1} p-6 text-center rounded-2xl border border-stroke bg-card
+                      transition-all duration-300 hover:border-purple/35 hover:shadow-[0_0_20px_rgba(139,92,246,.08)]`}
+                            >
+                                <div
+                                    class={`font-display font-bold gradient-text mb-1 ${small ? "text-[1.4rem]" : "text-[2rem]"}`}
+                                >
+                                    {num}
+                                </div>
+                                <div class="font-mono text-[0.65rem] tracking-[0.12em] uppercase text-dim">
+                                    {label}
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+
+                <div class="card-glass p-6">
+                    <p
+                        class="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-dim mb-[1.1rem]"
+                    >
+                        // trayectoria
+                    </p>
+                    <div class="flex flex-col gap-4">
+                        {
+                            timeline.map(({ year, event, color, active }) => (
+                                <div class="flex gap-4 items-start">
+                                    <div
+                                        class={`shrink-0 mt-[0.35rem] w-2.5 h-2.5 rounded-full ${active ? "animate-pulse-dot" : ""}`}
+                                        style={`background:${color};`}
+                                    />
+                                    <div>
+                                        <div class="font-mono text-[0.7rem] text-dim mb-0.5">
+                                            {year}
+                                        </div>
+                                        <div class="font-heading text-[0.85rem] text-fore">
+                                            {event}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

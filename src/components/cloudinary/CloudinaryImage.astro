@@ -1,0 +1,40 @@
+﻿---
+import { Picture } from "astro:assets";
+import { cn } from "../../lib/utils";
+
+interface Props {
+    publicId: string;
+    alt: string;
+    width?: number;
+    height?: number;
+    class?: string;
+}
+
+const {
+    publicId,
+    alt,
+    width = 1200,
+    height = 675,
+    class: className,
+} = Astro.props;
+
+const cloudDomain = import.meta.env.PUBLIC_CLOUDINARY_DOMAIN;
+const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+const transformations = `c_fill,w_${width},h_${height},g_auto,f_auto,q_auto`;
+const url = `${cloudDomain}/${cloudName}/image/upload/${transformations}/${publicId}`;
+---
+
+<Picture
+    src={url}
+    alt={alt}
+    width={width}
+    height={height}
+    loading="lazy"
+    formats={["avif", "webp", "jpeg"]}
+    class={cn(
+        "w-full h-auto block shadow-2xl rounded-lg border border-stroke",
+        className || "",
+    )}
+/>
+

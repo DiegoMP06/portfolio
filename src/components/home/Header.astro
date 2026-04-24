@@ -1,0 +1,29 @@
+---
+import Navbar from '../ui/Navbar.astro'
+---
+
+<header
+    id="navbar"
+    class="fixed top-0 left-0 right-0 z-100 transition-all duration-300"
+>
+    <Navbar />
+</header>
+
+<script>
+    const navbar = document.getElementById("navbar")!;
+    window.addEventListener(
+        "scroll",
+        () => {
+            if (window.scrollY > 40) {
+                navbar.style.background = "rgba(8,8,16,0.9)";
+                navbar.style.backdropFilter = "blur(20px)";
+                navbar.style.borderBottom = "1px solid #1e1e35";
+            } else {
+                navbar.style.background = "";
+                navbar.style.backdropFilter = "";
+                navbar.style.borderBottom = "";
+            }
+        },
+        { passive: true },
+    );
+</script>

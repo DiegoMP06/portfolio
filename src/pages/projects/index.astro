@@ -1,0 +1,69 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+import { getAllProjects, getProjectsCount } from "../../services/ProjectService";
+import ProjectItem from "../../components/projects/ProjectItem.astro";
+import Pagination from "../../components/ui/Pagination.astro";
+
+const PAGE_SIZE = 9;
+const pageParam = Astro.url.searchParams.get("page");
+const parsedPage = pageParam ? Number(pageParam) : 1;
+const hasValidPage = Number.isInteger(parsedPage) && parsedPage > 0;
+
+if (pageParam && !hasValidPage) {
+    return Astro.redirect("/projects");
+}
+
+const requestedPage = hasValidPage ? parsedPage : 1;
+const projectsCount = await getProjectsCount();
+const totalPages = Math.ceil(projectsCount / PAGE_SIZE);
+
+if (totalPages > 0 && requestedPage > totalPages) {
+    return Astro.redirect(
+        totalPages === 1 ? "/projects" : `/projects?page=${totalPages}`,
+    );
+}
+
+const currentPage = totalPages === 0 ? 1 : requestedPage;
+const offset = (currentPage - 1) * PAGE_SIZE;
+const projects = await getAllProjects(PAGE_SIZE, offset);
+
+const persistedQuery = Object.fromEntries(
+    [...Astro.url.searchParams.entries()].filter(([key]) => key !== "page"),
+);
+---
+
+<DashboardLayout
+    title="Proyectos"
+    description="Gestiona todos tus proyectos del portafolio."
+    navLink={{
+        label: "Nuevo Proyecto",
+        href: "/projects/create",
+        variant: "outline",
+    }}
+>
+    {
+        projects.length === 0 ? (
+            <div class="card-glass p-8 text-center text-slate-300">
+                Aún no tienes proyectos. Crea el primero.
+            </div>
+        ) : (
+            <div class="grid gap-5">
+                <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+                    {projects.map((project) => (
+                        <ProjectItem project={project} />
+                    ))}
+                </div>
+
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    totalItems={projectsCount}
+                    pageSize={PAGE_SIZE}
+                    basePath="/projects"
+                    query={persistedQuery}
+                    ariaLabel="Paginación de proyectos"
+                />
+            </div>
+        )
+    }
+</DashboardLayout>

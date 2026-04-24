@@ -1,17 +1,74 @@
 ---
+import About from "../components/home/About.astro";
+import Contact from "../components/home/Contact.astro";
+import Footer from "../components/ui/Footer.astro";
+import Header from "../components/home/Header.astro";
+import Hero from "../components/home/Hero.astro";
+import Projects from "../components/home/Projects.astro";
+import Skills from "../components/home/Skills.astro";
+import Layout from "../layouts/Layout.astro";
+import Services from "../components/home/Services.astro";
+import SectionDivider from "../components/home/SectionDivider.astro";
+import ScrollReveal from "../components/home/ScrollReveal.astro";
+import Learning from "../components/home/Learning.astro";   
 
+const pageTitle = "Portafolio de IA y Full Stack";
+const pageDescription =
+    "Portafolio de Diego Meneses Pérez con proyectos de Inteligencia Artificial y desarrollo Full Stack en Astro, React, Laravel y Python.";
+
+const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Person",
+            "@id": `${Astro.url.origin}/#person`,
+            name: "Diego Meneses Pérez",
+            url: Astro.url.origin,
+            jobTitle: "AI & Full Stack Developer",
+            sameAs: ["https://github.com/diegomeneses"],
+        },
+        {
+            "@type": "WebSite",
+            "@id": `${Astro.url.origin}/#website`,
+            url: Astro.url.origin,
+            name: "Diego Meneses Pérez",
+            inLanguage: "es-MX",
+            description: pageDescription,
+        },
+        {
+            "@type": "WebPage",
+            "@id": `${Astro.url.origin}/#webpage`,
+            url: Astro.url.href,
+            name: pageTitle,
+            inLanguage: "es-MX",
+            description: pageDescription,
+            isPartOf: { "@id": `${Astro.url.origin}/#website` },
+            about: { "@id": `${Astro.url.origin}/#person` },
+        },
+    ],
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title={pageTitle} description={pageDescription} schema={schema}>
+    <Header />
+ 
+  <main>
+    <Hero />
+    <SectionDivider />
+    <About />
+    <SectionDivider />
+    <Skills />
+    <SectionDivider />
+    <Learning />
+    <SectionDivider />
+    <Projects />
+    <SectionDivider />
+    <Services />
+    <SectionDivider />
+    <Contact />
+  </main>
+ 
+  <Footer />
+ 
+  <ScrollReveal />
+</Layout>

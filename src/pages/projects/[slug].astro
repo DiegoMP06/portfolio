@@ -1,0 +1,191 @@
+---
+import { ArrowLeft, Link2, FolderGit2 } from "lucide-react";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { getProjectBySlug } from "../../services/ProjectService";
+import TipTapEditorContainer from "../../components/editor/TipTapEditorContainer";
+import PhotoswipeGallery from "../../components/gallery/PhotoswipeGallery.astro";
+import { sanitizeRichTextHtml } from "../../lib/sanitize-html";
+
+const slug = Astro.params.slug ?? "";
+const project = await getProjectBySlug(slug);
+const isNotFound = !project;
+
+if (isNotFound) {
+    Astro.response.status = 404;
+}
+
+const title = project ? `Proyecto | ${project.name}` : "Proyecto no encontrado";
+const description = project
+    ? project.description
+    : "El proyecto que buscas no existe o ya no está disponible.";
+
+const cloudDomain = import.meta.env.PUBLIC_CLOUDINARY_DOMAIN;
+const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+const featuredImagePublicId = project?.media.find((m) => m.featured)?.url;
+const image =
+    featuredImagePublicId && cloudDomain && cloudName
+        ? `${cloudDomain}/${cloudName}/image/upload/c_fill,w_1200,h_630,g_auto,f_auto,q_auto/${featuredImagePublicId}`
+        : undefined;
+
+const sanitizedContent = project ? sanitizeRichTextHtml(project.content) : "";
+
+const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+                {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Inicio",
+                    item: Astro.url.origin,
+                },
+                {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: "Proyectos",
+                    item: `${Astro.url.origin}/projects`,
+                },
+                {
+                    "@type": "ListItem",
+                    position: 3,
+                    name: project?.name ?? "No encontrado",
+                    item: Astro.url.href,
+                },
+            ],
+        },
+        ...(project
+            ? [
+                  {
+                      "@type": "SoftwareSourceCode",
+                      name: project.name,
+                      description: project.description,
+                      codeRepository: project.githubUrl,
+                      url: Astro.url.href,
+                      datePublished: project.createdAt.toISOString(),
+                      dateModified: (
+                          project.updatedAt ?? project.createdAt
+                      ).toISOString(),
+                      programmingLanguage: (project.stack as string[]).join(", "),
+                      keywords: (project.stack as string[]).join(", "),
+                  },
+              ]
+            : []),
+    ],
+};
+---
+
+<AppLayout
+    title={title}
+    description={description}
+    ogType="article"
+    image={image}
+    robots={isNotFound ? "noindex,nofollow" : undefined}
+    publishedTime={project?.createdAt.toISOString()}
+    modifiedTime={(project?.updatedAt ?? project?.createdAt)?.toISOString()}
+    schema={schema}
+>
+    {
+        project ? (
+            <article class="max-w-4xl mx-auto grid grid-cols-1 gap-8">
+                <header class="grid grid-cols-1 gap-4">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <a
+                            href="/"
+                            class="text-neon hover:text-cyan transition-colors text-sm flex gap-1 items-center"
+                        >
+                            <ArrowLeft className="size-4" />
+                            Volver al inicio
+                        </a>
+
+                        {
+                            project.featured && (
+                                <span class="text-xs font-mono text-purple border border-purple/40 bg-purple/10 px-2 py-0.5 rounded">
+                                    Destacado
+                                </span>
+                            )
+                        }
+                    </div>
+
+                    <h1
+                        class="text-4xl md:text-5xl font-display text-white leading-tight"
+                    >
+                        {project.name}
+                    </h1>
+
+                    <div class="flex gap-2 items-center flex-wrap">
+                        <span class="border border-neon text-neon text-xs font-mono px-2 py-0.5 rounded">
+                            {project.status}
+                        </span>
+
+                        {project.categories.map((category) => (
+                            <span class="border border-purple text-purple text-xs font-mono px-2 py-0.5 rounded">
+                                {category.name}
+                            </span>
+                        ))}
+                    </div>
+
+                    <p class="text-slate-300 text-lg">{project.description}</p>
+
+                    <div class="flex flex-wrap gap-2">
+                        {
+                            (project.stack as string[]).map((tech) => (
+                                <span class="text-xs font-mono border border-stroke px-2 py-0.5 rounded text-slate-300">
+                                    {tech}
+                                </span>
+                            ))
+                        }
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-5 pt-2">
+                        <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            class="text-neon hover:text-cyan transition-colors flex gap-1 items-center"
+                        >
+                            <FolderGit2 className="size-4" />
+                            GitHub
+                        </a>
+                        {
+                            project.demoUrl && (
+                                <a
+                                    href={project.demoUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    class="text-red hover:text-pink transition-colors flex items-center gap-1"
+                                >
+                                    <Link2 className="size-4" />
+                                    Demo
+                                </a>
+                            )
+                        }
+                    </div>
+                </header>
+
+                <PhotoswipeGallery media={project.media} alt={project.name} />
+
+                <TipTapEditorContainer>
+                    <section set:html={sanitizedContent} />
+                </TipTapEditorContainer>
+            </article>
+        ) : (
+            <article class="max-w-3xl mx-auto card-glass p-8 text-center">
+                <h1 class="text-3xl font-display text-white mb-3">
+                    Proyecto no encontrado
+                </h1>
+                <p class="text-slate-300 mb-6">
+                    Este proyecto no existe o fue removido.
+                </p>
+                <a
+                    href="/"
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded border border-neon/50 text-neon hover:text-cyan hover:border-cyan transition-colors"
+                >
+                    <ArrowLeft className="size-4" />
+                    Volver al inicio
+                </a>
+            </article>
+        )
+    }
+</AppLayout>

@@ -1,0 +1,194 @@
+---
+import { certifications, learningNow, githubActivity } from "../../data/portfolio";
+
+const iconColorMap: Record<string, string> = {
+    purple: "background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.25);",
+    blue: "background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);",
+    red: "background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.2);",
+    cyan: "background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.2);",
+};
+
+const badgeMap: Record<string, string> = {
+    done: "background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);color:#4ade80;",
+    award: "background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);color:#fbbf24;",
+    contrib:
+        "background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:#00d4ff;",
+};
+
+const tagColorMap: Record<string, string> = {
+    green: "background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.2);",
+    blue: "background:rgba(0,212,255,.1);color:#00d4ff;border:1px solid rgba(0,212,255,.2);",
+    yellow: "background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.2);",
+};
+---
+
+<section id="learning" class="py-24 relative overflow-hidden">
+    <div
+        class="bg-blob w-104 h-104 top-0 right-0"
+        style="background:rgba(139,92,246,.05);"
+    >
+    </div>
+    <div
+        class="bg-blob w-80 h-80 bottom-0 left-0"
+        style="background:rgba(0,212,255,.04);"
+    >
+    </div>
+
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-14 reveal">
+            <p
+                class="font-mono text-[0.7rem] tracking-[0.25em] uppercase text-purple mb-3"
+            >
+                // aprendizaje & logros
+            </p>
+            <h2
+                class="font-display font-bold text-[clamp(1.5rem,3vw,2.25rem)] tracking-[0.05em] mb-3"
+            >
+                No paro de <span class="gradient-text-pb">crecer</span>
+            </h2>
+            <div class="section-line-pb mx-auto mb-4"></div>
+            <p class="text-dim max-w-lg mx-auto text-[0.9rem]">
+                Ser estudiante no es limitación — es ventaja. Aquí el registro
+                honesto de mi camino.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 max-md:grid-cols-1">
+            <div class="reveal-left">
+                <p
+                    class="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-dim mb-5"
+                >
+                    // certificaciones & logros
+                </p>
+                <div class="flex flex-col gap-3.5">
+                    {
+                        certifications.map(
+                            ({
+                                icon,
+                                iconColor,
+                                title,
+                                meta,
+                                badge,
+                                badgeType,
+                            }) => (
+                                <div
+                                    class="cert-shimmer flex gap-4 items-start px-5 py-4 rounded-xl border border-stroke bg-card
+                     transition-all duration-300 hover:border-purple/30 hover:translate-x-1"
+                                >
+                                    <div
+                                        class="w-9 h-9 rounded-lg shrink-0 flex items-center justify-center text-base"
+                                        style={iconColorMap[iconColor]}
+                                    >
+                                        {icon}
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="font-heading text-[0.85rem] font-semibold text-fore mb-0.5">
+                                            {title}
+                                        </div>
+                                        <div class="font-mono text-[0.62rem] text-dim tracking-[0.05em]">
+                                            {meta}
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="font-mono text-[0.58rem] tracking-widest px-2.5 py-0.5 rounded-[0.3rem] self-start shrink-0"
+                                        style={badgeMap[badgeType]}
+                                    >
+                                        {badge}
+                                    </span>
+                                </div>
+                            ),
+                        )
+                    }
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-5 reveal">
+                <div class="p-7 rounded-2xl border border-stroke bg-card">
+                    <div class="flex items-center gap-2.5 mb-6">
+                        <span
+                            class="w-2 h-2 rounded-full bg-neon animate-pulse-dot"
+                        ></span>
+                        <span
+                            class="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-neon"
+                        >
+                            Aprendiendo ahora mismo
+                        </span>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        {
+                            learningNow.map(({ name, pct }) => (
+                                <div class="flex flex-col gap-1.5">
+                                    <div class="flex justify-between items-center">
+                                        <span class="font-heading text-[0.82rem] text-dim">
+                                            {name}
+                                        </span>
+                                        <span class="font-mono text-[0.68rem] text-neon">
+                                            {pct}%
+                                        </span>
+                                    </div>
+                                    <div class="h-1.25 rounded-full bg-stroke overflow-hidden">
+                                        <div
+                                            class="lbar h-full rounded-full w-0 transition-all duration-[1.4s] ease-out"
+                                            data-lwidth={pct}
+                                            style="background:linear-gradient(to right,#8b5cf6,#00d4ff);"
+                                        />
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <!-- GitHub activity -->
+                <div class="p-6 rounded-2xl border border-stroke bg-card">
+                    <p
+                        class="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-dim mb-4"
+                    >
+                        // actividad en GitHub
+                    </p>
+                    <div class="flex flex-col gap-2.5">
+                        {
+                            githubActivity.map(({ name, tag, tagType }) => (
+                                <div
+                                    class="flex justify-between items-center px-3.5 py-2.5 rounded-lg border border-stroke
+                       bg-white/2 transition-all duration-200 hover:border-neon/20"
+                                >
+                                    <span class="font-heading text-[0.8rem] text-dim">
+                                        {name}
+                                    </span>
+                                    <span
+                                        class="font-mono text-[0.62rem] px-2.5 py-0.5 rounded-[0.3rem]"
+                                        style={tagColorMap[tagType]}
+                                    >
+                                        {tag}
+                                    </span>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const lbars = document.querySelectorAll<HTMLElement>(".lbar");
+    const lbarIO = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting) {
+                    const el = e.target as HTMLElement;
+                    const w = el.dataset.lwidth;
+                    if (w)
+                        setTimeout(() => {
+                            el.style.width = w + "%";
+                        }, 300);
+                    lbarIO.unobserve(el);
+                }
+            });
+        },
+        { threshold: 0.3 },
+    );
+    lbars.forEach((b) => lbarIO.observe(b));
+</script>

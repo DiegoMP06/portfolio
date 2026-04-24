@@ -1,0 +1,284 @@
+---
+import HeroImage from "../../assets/hero.jpg";
+import { Picture } from "astro:assets";
+
+const techStack = [
+    "Python",
+    "React",
+    "Laravel",
+    "TypeScript",
+    "Astro.js",
+    "ML / DL",
+    "Vue.js",
+    "NestJS",
+    'Flask',
+];
+---
+
+<section
+    id="hero"
+    class="max-w-6xl mx-auto px-6 min-h-svh grid grid-cols-2 items-center gap-16
+         pt-20 pb-20 relative overflow-hidden
+         max-md:grid-cols-1 max-md:text-center max-md:pt-28 max-md:gap-12"
+>
+    <div
+        class="absolute inset-0 pointer-events-none"
+        style="background:
+      radial-gradient(ellipse 70% 60% at 60% -10%, rgba(139,92,246,.22) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 90% 60%,  rgba(255,45,85,.12) 0%, transparent 50%),
+      radial-gradient(ellipse 40% 50% at 10% 80%,  rgba(0,212,255,.09) 0%, transparent 50%);"
+    >
+    </div>
+
+    <div
+        class="absolute inset-0 pointer-events-none"
+        style="background-image:
+      linear-gradient(rgba(0,212,255,.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,.025) 1px, transparent 1px);
+      background-size: 60px 60px;"
+    >
+    </div>
+
+    <div class="scanline-fx"></div>
+
+    <div
+        class="orb w-md h-112 top-[5%] left-[5%]"
+        style="background:rgba(139,92,246,.12);"
+    >
+    </div>
+    <div
+        class="orb w-80 h-80 bottom-[10%] right-[2%]"
+        style="background:rgba(255,45,85,.09); animation-delay:2s;"
+    >
+    </div>
+    <div
+        class="orb w-72 h-72 top-[40%] left-[30%]"
+        style="background:rgba(0,212,255,.07);  animation-delay:4s;"
+    >
+    </div>
+
+    <div class="relative z-10">
+        <div
+            class="animate-fade-in delay-1 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple/30 bg-purple/10 mb-8 font-mono text-[0.7rem] tracking-[0.2em] uppercase text-purple"
+        >
+            <span class="w-2 h-2 rounded-full bg-red animate-pulse-dot"></span>
+            Disponible para proyectos
+        </div>
+
+        <p
+            class="animate-fade-up delay-1 font-mono text-[0.75rem] tracking-[0.25em] uppercase text-dim mb-3"
+        >
+            // hola, soy
+        </p>
+
+        <h1
+            class="animate-fade-up delay-2 font-display font-black leading-none mb-2 tracking-[-0.02em]"
+        >
+            <span
+                class="block gradient-text"
+                style="font-size:clamp(4rem,10vw,7rem);">Diego</span
+            >
+            <span
+                class="block text-fore"
+                style="font-size:clamp(3rem,7vw,5.5rem);">Meneses</span
+            >
+        </h1>
+
+        <div
+            class="animate-fade-up delay-3 flex items-center flex-wrap gap-2 mb-6 font-heading font-light text-dim min-h-8"
+            style="font-size:clamp(.95rem,1.5vw,1.2rem);"
+        >
+            <span id="typewriter-text" class="neon-blue"></span>
+            <span
+                class="inline-block w-0.5 h-[1em] bg-neon align-middle animate-blink ml-0.5"
+            ></span>
+        </div>
+
+        <p
+            class="animate-fade-up delay-4 font-body text-dim leading-relaxed max-w-lg mb-10 max-md:mx-auto max-md:text-left"
+        >
+            Construyendo el futuro con
+            <strong class="text-red font-medium">inteligencia artificial</strong
+            > y
+            <em class="text-neon not-italic font-medium"
+                >desarrollo web moderno</em
+            >. Cada línea de código es un paso hacia algo más grande.
+        </p>
+
+        <div
+            class="animate-fade-up delay-5 flex items-center flex-wrap gap-4 mb-12 max-md:justify-center"
+        >
+            <a href="#projects" class="btn-primary">
+                <span class="flex items-center gap-2">
+                    Ver proyectos
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                    >
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                </span>
+            </a>
+            <a href="#contact" class="btn-outline">Hablemos</a>
+            <a
+                href="https://github.com/DiegoMP06"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-stroke text-dim transition-all duration-300
+               hover:border-neon/40 hover:text-neon hover:shadow-[0_0_12px_rgba(0,212,255,.15)]"
+            >
+                <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                >
+                    <path
+                        d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.09.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"
+                    ></path>
+                </svg>
+            </a>
+        </div>
+
+        <div class="animate-fade-in delay-6">
+            <p
+                class="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-dim mb-2.5"
+            >
+                // stack principal
+            </p>
+            <div class="flex flex-wrap gap-2 max-md:justify-center">
+                {
+                    techStack.map((t) => (
+                        <span
+                            class="font-mono text-[0.7rem] px-[0.7rem] py-1 rounded-[0.3rem] border border-stroke text-dim bg-card/50 cursor-default
+                       transition-all duration-200 hover:border-purple/40 hover:text-purple hover:bg-purple/5"
+                        >
+                            {t}
+                        </span>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="relative z-10 flex items-center justify-center animate-fade-in delay-3 max-md:order-first"
+    >
+        <div
+            class="relative"
+            style="width:clamp(240px,32vw,380px); aspect-ratio:3/4;"
+        >
+            <div class="photo-frame w-full h-full">
+                <div
+                    class="relative z-10 w-full h-full rounded-[1.4rem] overflow-hidden bg-card border border-stroke"
+                >
+                    <Picture
+                        src={HeroImage}
+                        formats={["avif", "webp"]}
+                        alt="Diego Meneses Perez"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+            </div>
+
+            <div
+                class="absolute bottom-6 -left-8 flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-neon/30
+               backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,.5)]"
+                style="background:rgba(8,8,16,0.9);"
+            >
+                <span
+                    class="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,.6)] animate-pulse-dot shrink-0"
+                ></span>
+                <div>
+                    <p
+                        class="font-heading text-[0.75rem] text-fore whitespace-nowrap"
+                    >
+                        Disponible para colaborar
+                    </p>
+                    <span class="font-mono text-[0.6rem] text-dim block"
+                        >Tlaxcala, México</span
+                    >
+                </div>
+            </div>
+
+            <div
+                class="absolute top-4 -right-6 px-3 py-1.5 rounded-lg border border-purple/40 backdrop-blur-md"
+                style="background:rgba(139,92,246,.15);"
+            >
+                <p class="font-display text-[0.8rem] text-purple font-bold">
+                    3+
+                </p>
+                <span
+                    class="font-mono text-[0.55rem] tracking-widest text-dim uppercase block"
+                    >Años Dev</span
+                >
+            </div>
+
+            <div
+                class="absolute -bottom-6 -right-6 grid gap-1.5 max-md:hidden"
+                style="grid-template-columns:repeat(5,6px);"
+            >
+                {
+                    Array.from({ length: 15 }).map(() => (
+                        <span class="w-1.25 h-1.25 rounded-full bg-purple opacity-25" />
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+    >
+        <span
+            class="font-mono text-[0.6rem] tracking-[0.2em] uppercase text-dim opacity-60"
+            >scroll</span
+        >
+        <div
+            class="w-6 h-6 border-r-2 border-b-2 border-dim/40 rotate-45 animate-scroll-arrow"
+        >
+        </div>
+    </div>
+</section>
+
+<script>
+    const roles = [
+        "AI Developer",
+        "Full Stack",
+        "ML Enthusiast",
+        "Laravel Developer",
+        "React Developer",
+        'Vue Developer',
+    ];
+    let roleIdx = 0,
+        charIdx = 0,
+        deleting = false;
+    const tw = document.getElementById("typewriter-text")!;
+
+    function typeWriter() {
+        const current = roles[roleIdx];
+        if (!deleting) {
+            tw.textContent = current.slice(0, charIdx + 1);
+            charIdx++;
+            if (charIdx === current.length) {
+                deleting = true;
+                setTimeout(typeWriter, 2000);
+                return;
+            }
+        } else {
+            tw.textContent = current.slice(0, charIdx - 1);
+            charIdx--;
+            if (charIdx === 0) {
+                deleting = false;
+                roleIdx = (roleIdx + 1) % roles.length;
+            }
+        }
+        setTimeout(typeWriter, deleting ? 60 : 90);
+    }
+    setTimeout(typeWriter, 1200);
+</script>

@@ -1,0 +1,24 @@
+﻿---
+import { cn } from "../../lib/utils";
+
+const { as = "button", class: className = "", ...props } = Astro.props;
+
+const classes = cn(
+    "inline-flex items-center gap-2 px-4 py-2 bg-transparent text-neon font-heading font-semibold text-sm rounded-md border border-neon/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon/70 transition-all duration-300 ease-in-out cursor-pointer",
+    "hover:bg-neon/10 hover:border-neon hover:shadow-[0_0_24px_rgba(0,212,255,0.28)] hover:-translate-y-0.5",
+    className,
+);
+---
+
+{
+    as === "button" ? (
+        <button class={classes} {...props}>
+            <slot />
+        </button>
+    ) : (
+        <a class={classes} {...props}>
+            <slot />
+        </a>
+    )
+}
+

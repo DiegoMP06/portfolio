@@ -1,0 +1,138 @@
+---
+type Props = {
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+    pageSize: number;
+    basePath: string;
+    query?: Record<string, string>;
+    ariaLabel?: string;
+};
+
+const {
+    currentPage,
+    totalPages,
+    totalItems,
+    pageSize,
+    basePath,
+    query = {},
+    ariaLabel = "Paginacion",
+} = Astro.props;
+
+const startItem = totalItems === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+const endItem = Math.min(currentPage * pageSize, totalItems);
+
+const createPageHref = (page: number) => {
+    const params = new URLSearchParams(query);
+
+    if (page <= 1) {
+        params.delete("page");
+    } else {
+        params.set("page", String(page));
+    }
+
+    const qs = params.toString();
+    return qs ? `${basePath}?${qs}` : basePath;
+};
+
+const getPaginationItems = () => {
+    if (totalPages <= 7) {
+        return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    if (currentPage <= 4) {
+        return [1, 2, 3, 4, 5, "ellipsis", totalPages] as const;
+    }
+
+    if (currentPage >= totalPages - 3) {
+        return [
+            1,
+            "ellipsis",
+            totalPages - 4,
+            totalPages - 3,
+            totalPages - 2,
+            totalPages - 1,
+            totalPages,
+        ] as const;
+    }
+
+    return [
+        1,
+        "ellipsis",
+        currentPage - 1,
+        currentPage,
+        currentPage + 1,
+        "ellipsis",
+        totalPages,
+    ] as const;
+};
+
+const paginationItems = getPaginationItems();
+---
+
+{
+    totalPages > 1 && (
+        <nav
+            class="card-glass p-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+            aria-label={ariaLabel}
+        >
+            <p class="text-sm text-slate-300 font-mono">
+                Mostrando {startItem} - {endItem} de {totalItems}
+            </p>
+
+            <div class="flex items-center gap-2 flex-wrap">
+                <a
+                    href={createPageHref(currentPage - 1)}
+                    class={`px-3 py-1.5 rounded border text-sm font-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon/70 transition-colors ${
+                        currentPage === 1
+                            ? "pointer-events-none opacity-40 border-stroke text-slate-500"
+                            : "border-neon/40 text-neon hover:border-cyan hover:text-cyan"
+                    }`}
+                    aria-disabled={currentPage === 1}
+                    aria-label="Página anterior"
+                >
+                    Anterior
+                </a>
+
+                {
+                    paginationItems.map((item) =>
+                        item === "ellipsis" ? (
+                            <span class="px-2 text-slate-400" aria-hidden="true">
+                                ...
+                            </span>
+                        ) : item === currentPage ? (
+                            <span
+                                class="px-3 py-1.5 rounded border border-cyan bg-cyan/10 text-cyan text-sm font-heading"
+                                aria-current="page"
+                            >
+                                {item}
+                            </span>
+                        ) : (
+                            <a
+                                href={createPageHref(item)}
+                                class="px-3 py-1.5 rounded border border-stroke text-slate-300 text-sm font-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon/70 hover:text-white hover:border-neon/50 transition-colors"
+                                aria-label={`Ir a la página ${item}`}
+                            >
+                                {item}
+                            </a>
+                        ),
+                    )
+                }
+
+                <a
+                    href={createPageHref(currentPage + 1)}
+                    class={`px-3 py-1.5 rounded border text-sm font-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon/70 transition-colors ${
+                        currentPage === totalPages
+                            ? "pointer-events-none opacity-40 border-stroke text-slate-500"
+                            : "border-neon/40 text-neon hover:border-cyan hover:text-cyan"
+                    }`}
+                    aria-disabled={currentPage === totalPages}
+                    aria-label="Página siguiente"
+                >
+                    Siguiente
+                </a>
+            </div>
+        </nav>
+    )
+}
+

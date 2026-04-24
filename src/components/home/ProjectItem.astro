@@ -1,0 +1,111 @@
+---
+import type { FormattedProject } from "../../types";
+import CloudinaryImage from "../cloudinary/CloudinaryImage.astro";
+
+type Props = {
+    project: FormattedProject;
+};
+
+const tagColorMap: Record<string, string> = {
+    purple: "background:rgba(139,92,246,.12);color:#8b5cf6;border:1px solid rgba(139,92,246,.25);",
+    blue: "background:rgba(0,212,255,.1);color:#00d4ff;border:1px solid rgba(0,212,255,.2);",
+    red: "background:rgba(255,45,85,.1);color:#ff2d55;border:1px solid rgba(255,45,85,.2);",
+    cyan: "background:rgba(6,182,212,.1);color:#06b6d4;border:1px solid rgba(6,182,212,.2);",
+};
+
+const i = Math.floor(Math.random() * 4);
+
+const { project } = Astro.props;
+const { name, description, slug, demoUrl, githubUrl, stack, media } = project;
+
+const featureImage = media.find((m) => m.featured)?.url || "";
+---
+
+<article
+    class={`card-glass overflow-hidden flex flex-col reveal rd${i + 1}
+                    transition-all duration-300 cursor-pointer
+                    hover:-translate-y-1 hover:shadow-[0_12px_48px_rgba(0,0,0,.5)]`}
+>
+    <div>
+        <CloudinaryImage
+            publicId={featureImage}
+            alt={`Imagen de ${project.name}`}
+            width={640}
+            height={360}
+        />
+    </div>
+
+    <div class="p-6 flex-1 flex flex-col">
+        <div class="flex flex-wrap gap-1.5 mb-3">
+            {
+                (stack as string[]).map((label, idx) => {
+                    const colors = ["purple", "blue", "red", "cyan"];
+                    const colorKey = colors[idx % colors.length];
+                    return (
+                        <span
+                            class="font-mono text-[0.6rem] px-2 py-0.5 rounded-sm tracking-[0.08em]"
+                            style={tagColorMap[colorKey]}
+                        >
+                            {label}
+                        </span>
+                    );
+                })
+            }
+        </div>
+        <h3 class="font-heading text-[1.05rem] font-bold text-fore mb-2">
+            {name}
+        </h3>
+        <p class="text-[0.825rem] text-dim leading-relaxed flex-1 mb-5">
+            {description}
+        </p>
+
+        <div class="flex gap-3 mt-auto">
+            {demoUrl && (
+                <a
+                    href={demoUrl}
+                    class="font-heading text-[0.75rem] font-semibold inline-flex items-center gap-1.5
+                            px-3.5 py-1.5 rounded-md border border-purple/30
+                            bg-linear-to-br from-red/15 to-purple/15 text-purple
+                            transition-all duration-200 hover:border-purple hover:shadow-[0_0_12px_rgba(139,92,246,.2)]"
+                >
+                    <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path
+                            d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                        ></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                    Demo
+                </a>
+            )}
+
+            <a
+                href={githubUrl}
+                target="_blank"
+                rel="noopener"
+                class="font-heading text-[0.75rem] font-semibold inline-flex items-center gap-1.5
+                        px-3.5 py-1.5 rounded-md border border-stroke text-dim
+                        transition-all duration-200 hover:border-neon/40 hover:text-neon"
+            >
+                <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                >
+                    <path
+                        d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.09.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"
+                    ></path>
+                </svg>
+                Código
+            </a>
+        </div>
+    </div>
+</article>

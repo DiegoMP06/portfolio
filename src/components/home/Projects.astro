@@ -1,0 +1,53 @@
+---
+import { getFeaturedProjects } from "../../services/ProjectService";
+import ProjectItem from "./ProjectItem.astro";
+
+const projects = await getFeaturedProjects();
+
+
+
+---
+
+<section id="projects" class="py-24 relative overflow-hidden">
+    <div class="bg-blob w-88 h-88 bottom-0 right-0" style="background:rgba(255,45,85,.05);"></div>
+
+    <div class="max-w-6xl mx-auto px-6">
+
+        <!-- Header -->
+        <div class="text-center mb-16 reveal">
+        <p class="font-mono text-[0.7rem] tracking-[0.25em] uppercase text-red mb-3">// proyectos</p>
+        <h2 class="font-display font-bold text-[clamp(1.5rem,3vw,2.25rem)] tracking-wider mb-3">
+            Lo que he <span class="gradient-text-rp">construido</span>
+        </h2>
+        <div class="section-line mx-auto mb-4"></div>
+        <p class="text-dim max-w-120 mx-auto text-[0.9rem]">
+            Proyectos reales con enfoque en producto, performance y experiencia.
+        </p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-6 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1">
+
+        {projects.map((project) => (
+           <ProjectItem project={project} />
+        ))}
+
+        <article class="card-glass overflow-hidden flex flex-col reveal rd3">
+            <div class="flex-1 flex flex-col items-center justify-center text-center p-8 min-h-88">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
+                stroke="rgba(120,120,160,.35)" stroke-width="1.5" class="mb-3">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 3"/>
+            </svg>
+            <p class="font-heading text-[0.95rem] text-dim mb-1">Más proyectos pronto</p>
+            <p class="font-mono text-[0.7rem] text-dim/50">Actualmente en desarrollo</p>
+            <div class="inline-flex items-center gap-1.5 font-mono text-[0.65rem] tracking-[0.15em] uppercase text-dim
+                        border border-dashed border-stroke rounded-[0.4rem] px-3 py-1.5 mt-4">
+                <span class="w-1.5 h-1.5 rounded-full bg-red animate-pulse-dot"></span>
+                En construcción
+            </div>
+            </div>
+        </article>
+
+        </div>
+    </div>
+</section>

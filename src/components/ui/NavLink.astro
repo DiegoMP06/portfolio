@@ -1,0 +1,43 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import type { NavLink } from "../../types";
+import { cn } from "../../lib/utils";
+
+type Props = {
+    link: NavLink;
+    variant?: "mobile" | "desktop";
+} & HTMLAttributes<"a">;
+
+const {
+    link,
+    variant = "desktop",
+    class: className = "",
+    ...props
+} = Astro.props;
+---
+
+{
+    variant === "mobile" ? (
+        <a
+            href={link.href}
+            {...props}
+            class={cn(
+                "font-body text-[0.9rem] text-dim hover:text-fore transition-colors",
+                `${className}`,
+            )}
+        >
+            {link.label}
+        </a>
+    ) : (
+        <a
+            href={link.href}
+            {...props}
+            class={cn(
+                "relative font-body text-[0.85rem] tracking-[0.04em] text-dim transition-colors duration-200 hover:text-fore after:content-[''] after:absolute after:-bottom-[3px] after:left-0 after:w-0 after:h-px after:bg-linear-to-r after:from-red after:to-purple after:transition-all after:duration-300 hover:after:w-full",
+                `${className}`,
+            )}
+        >
+            {link.label}
+        </a>
+    )
+}

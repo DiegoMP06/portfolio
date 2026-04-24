@@ -1,0 +1,74 @@
+---
+import "photoswipe/style.css";
+
+import type { MediaType } from "../../types";
+import CloudinaryImage from "../cloudinary/CloudinaryImage.astro";
+
+type Props = {
+    media: (Pick<MediaType, 'url'| 'featured'>)[];
+    alt: string;
+};
+
+const { media, alt,  } = Astro.props;
+
+const dimensions = {
+    width: 1200,
+    height: 675,
+};
+
+const cardDimensions = {
+    width: 640,
+    height: 360,
+};
+
+const cloudDomain = import.meta.env.PUBLIC_CLOUDINARY_DOMAIN;
+const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+const transformations = `c_fill,w_${dimensions.width},h_${dimensions.height},g_auto,f_auto,q_auto`;
+const url = (publicId: string) =>
+    `${cloudDomain}/${cloudName}/image/upload/${transformations}/${publicId}`;
+---
+
+<div
+    id="gallery"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 my-16"
+>
+    {
+        media.map((item) => {
+            return (
+                <a
+                    href={url(item.url)}
+                    data-pswp-width={dimensions.width}
+                    data-pswp-height={dimensions.height}
+                    target="_blank"
+                >
+                    <CloudinaryImage
+                        publicId={item.url}
+                        alt={alt}
+                        width={cardDimensions.width}
+                        height={cardDimensions.height}
+                    />
+                </a>
+            );
+        })
+    }
+</div>
+
+<script>
+    import PhotoSwipeLightbox from "photoswipe/lightbox";
+
+    function initPhotoSwipe() {
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: "#gallery",
+            children: "a",
+            pswpModule: () => import("photoswipe"),
+        });
+        lightbox.init();
+    }
+
+    document.addEventListener("astro:page-load", () => {
+        if (document.querySelector("#gallery")) {
+            initPhotoSwipe();
+        }
+    });
+</script>
